@@ -1,0 +1,114 @@
+/* iframe 编辑器内容区样式
+ * 设计原则：最小化干预，只设置防止溢出的安全约束
+ * 所有颜色、字体、间距等样式由微信文章内联 style 和注入的 CSS 决定
+ *
+ * 关键点：不设置 box-sizing、margin、padding 等全局 reset，
+ * 让微信文章的内联样式完整生效 */
+
+/* 仅处理基础滚动和溢出 */
+html {
+    overflow: hidden;      /* 禁止 html 产生任何滚动条 */
+    height: 100%;          /* 确保 html 占满 iframe 视口 */
+}
+
+body {
+    min-height: 100%;
+    outline: none;
+    cursor: text;
+    /* 允许内容撑开高度 */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    /* 白色背景，模拟微信文章阅读环境 */
+    background-color: #ffffff;
+    /* 微信文章标准内边距 */
+    padding: 16px;
+    /* 字体与微信端保持一致 */
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+    color: #333333;
+    overflow-y: hidden;    /* 默认无滚动条，由 JS 按需开启 */
+}
+
+/* 唯一强制规则：防止图片/视频/表格溢出容器 */
+img, video, embed, object {
+    max-width: 100% !important;
+}
+
+/* 表格溢出保护 */
+table {
+    max-width: 100% !important;
+}
+
+/* 确保 pre 标签不会撑破布局 */
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto;
+}
+
+/* 确保 iframe（如视频嵌入）不溢出 */
+iframe {
+    max-width: 100%;
+}
+
+/* ======================================================
+ * 微信文章内置 CSS 兜底
+ * 这些样式在微信原始页面中通过内置 CSS 提供，不在 <style> 标签里
+ * 必须在 iframe 中内置，才能保证微信文章相关 class 正常渲染
+ * ====================================================== */
+
+/* 有序/无序列表缩进 - 微信文章常用 */
+.list-paddingleft-1 {
+    padding-left: 1.5em;
+}
+.list-paddingleft-2 {
+    padding-left: 2em;
+}
+.list-paddingleft-3 {
+    padding-left: 2.5em;
+}
+
+/* 微信文章图片容器 */
+.wxw-img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+}
+
+/* 微信富媒体图片 */
+.rich_pages.wxw-img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* 135编辑器相关 */
+.135editor img {
+    max-width: 100% !important;
+}
+
+/* 秀米编辑器相关 */
+[powered-by="xiumi.us"] img {
+    max-width: 100% !important;
+}
+
+/* 微信文章通用重置（来自微信原始样式） */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 引用块常见样式 */
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+
+/* 代码块 */
+code {
+    word-break: break-all;
+}
+
+/* 微信文章中的 section 已被 PHP 转换为 div，确保行为一致 */
+div {
+    max-width: 100%;
+}

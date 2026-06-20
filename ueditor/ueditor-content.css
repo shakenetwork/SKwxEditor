@@ -1,0 +1,20 @@
+/* UEditor 编辑器内容区样式
+ * 设计原则：只设置最基础的布局约束，不做任何会被内联 style 覆盖的全局样式
+ * 这样可以让微信文章的内联样式（background-color, color, font-size 等）100% 显示正确 */
+
+body {
+    background-color: #ffffff;
+    padding: 15px;
+    margin: 0;
+}
+
+/* 图片的最大宽度约束——这是唯一需要强制的规则 */
+img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* 表格和视频同样需要宽度约束 */
+table, video, iframe, embed, object {
+    max-width: 100% !important;
+}
